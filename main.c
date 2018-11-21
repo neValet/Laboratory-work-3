@@ -1,87 +1,86 @@
 #include <stdio.h>
 #include <math.h>
 #include <conio.h>
-#define x 5
-#define y 5
-int array[x][y];
-reading(){
-	
-	/*  1, 16, 21, 11, 6,
-	  2, 17, 22, 12, 7,
-	  3, 18, 23, 13, 8,
-	  4, 19, 24, 14, 9,
-	  5, 20, 25, 15, 10;*/
+#define numberOfRows 5
+#define numberOfColumns 5
+int matrix[numberOfRows][numberOfColumns];
+inputOfMatrix(){
 
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++) {
-			scanf_s("%d", &array[i][j]);
-			
-		}
-	}
+    /*  1, 16, 21, 11, 6,
+      2, 17, 22, 12, 7,
+      3, 18, 23, 13, 8,
+      4, 19, 24, 14, 9,
+      5, 20, 25, 15, 10;*/
+
+    for (int rows = 0; rows < 5; rows++) {
+        for (int columns = 0; columns < 5; columns++) {
+            scanf("%d", &matrix[rows][columns]);
+
+        }
+    }
 }
 
-sorting() {
-	for (int i = 0; i < 5; i++) {
-		for (int j = 1; j < 5; j++) {
-			int g = array[i][j];
-			for (int k = j - 1; k >=0 ; k--) {
-				if (array[i][k] > g) {
-					array[i][k + 1] = array[i][k];
-					if (k == 0) {
-						array[i][k] = g;
-					}
-				}
+matrixInsertionSort() {
+    for (int rows = 0; rows < 5; rows++) {
+        for (int columns = 1; columns < 5; columns++) {
+            int g = matrix[rows][columns];
+            for (int k = columns - 1; k >=0 ; k--) {
+                if (matrix[rows][k] > g) {
+                    matrix[rows][k + 1] = matrix[rows][k];
+                    if (k == 0) {
+                        matrix[rows][k] = g;
+                    }
+                }
 
-				else {
-					array[i][k+1] = g;
-					break;
-				}
+                else {
+                    matrix[rows][k+1] = g;
+                    break;
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
 }
 
-printarray(){
-for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++) {
-			printf(" %d \t", array[i][j]);
-		}
-		printf("\n");
-	}
-	_getch();
+outputOfMatrix(){
+    for (int rows = 0; rows < 5; rows++) {
+        for (int columns = 0; columns < 5; columns++) {
+            printf(" %d \t", matrix[rows][columns]);
+        }
+        printf("\n");
+    }
+    _getch();
 }
 
- underdiagonal() {
-	 int count = 0;
-	 double sum = 0;
-	 float ave = 0, mult = 1;
-	 for (int i = 0; i < 4; i++) {
-		 sum = 0, count = 0;
-		 for (int j = 0; j < 5; j++) {
-			 if (i < j) {
-				 sum += array[j][i];
-				 count++;
-				 ave = sum / count;
-				 //mult *=ave;
-				
-			 }
+averageMeanOfColumnsUnderDiagonal() {
+    int numberOfElementsInColumn = 0;
+    double sumOfElementsInColumn = 0;
+    float averageMeanOfElementsInColumn = 0, productOfAverageMeans = 1;
+    for (int rows = 0; rows < 4; rows++) {
+        sumOfElementsInColumn = 0, numberOfElementsInColumn = 0;
+        for (int columns = 0; columns < 5; columns++) {
+            if (rows < columns) {
+                sumOfElementsInColumn += matrix[columns][rows];
+                numberOfElementsInColumn++;
+                averageMeanOfElementsInColumn = sumOfElementsInColumn / numberOfElementsInColumn;
 
-		 }
-		 printf("%lf \n", ave);
-		 mult *= ave;
-	 }
-	 printf("muliply =  %lf", mult);
-	 _getch();
- }
+            }
+
+        }
+        printf("%lf \n", averageMeanOfElementsInColumn);
+        productOfAverageMeans *= averageMeanOfElementsInColumn;
+    }
+    printf("product =  %lf", productOfAverageMeans);
+    _getch();
+}
 
 main() {
-	reading(array);
-	sorting(array);
-	printarray(array);
-	printf("\n");
-	underdiagonal(); 
+    inputOfMatrix(matrix);
+    matrixInsertionSort(matrix);
+    outputOfMatrix(matrix);
+    printf("\n");
+    averageMeanOfColumnsUnderDiagonal();
 
-	_getch();
+    _getch();
 }
